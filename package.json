@@ -1,0 +1,34 @@
+{
+  "name": "namaste-react-june-2026",
+  "version": "1.0.0",
+  "description": "Namaste React",
+  "scripts": {
+    "test": "jest",
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
+    "@babel/preset-react": "^8.0.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "babel-jest": "^30.4.1",
+    "buffer": "^6.0.3",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
+    "parcel": "^2.16.4"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.12.0",
+    "@tailwindcss/postcss": "^4.3.1",
+    "axios": "^1.18.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-redux": "^9.3.0",
+    "react-router-dom": "^6.28.0",
+    "tailwindcss": "^4.3.1"
+  }
+}

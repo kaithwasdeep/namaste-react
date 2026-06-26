@@ -1,22 +1,71 @@
-{/* <div className="parent">
-    <div className="child">
-        <h1>This is an h1 tag</h1>
-        <h2>This is an h2 tag</h2>
-    </div>
-</div> */}
+import React, {lazy, Suspense, useEffect, useState} from "react";
+import ReactDOM from "react-dom/client";
+import Header from "./components/Header";
+import Body from "./components/Body";
+// import About from "./components/About";
+import Contact from "./components/Contact";
+import Error from "./components/Error";
+import RestaurantMenu from "./components/RestaurantMenu";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
 
-const parent = React.createElement("div", {className: "parent"}, 
-    [React.createElement("div", {className: "child1"}, 
-        [React.createElement("h1", {className: "heading1"}, "This is an h1 tag"),
-        React.createElement("h2", {className: "heading2"}, "This is an h2 tag")]
-    ),
-    React.createElement("div", {className: "child2"}, 
-        [React.createElement("h1", {className: "heading1"}, "This is an h1 tag"),
-        React.createElement("h2", {className: "heading2"}, "This is an h2 tag")]
-    )] 
-)
+const About = lazy(() => import("./components/About"));
 
-const heading = React.createElement("h1", { id: "heading", className: "heading_cls"}, "Hello from React!");
+const AppLayout = () => {
+    
+  const [userName, setUserName] = useState();
+
+  useEffect(() => {
+    const name = "Akshay Saini";
+    setUserName(name);
+  }, []);
+
+  return (
+    <Provider store={appStore}>
+      <UserContext.Provider value={{loggedInUser: userName, setUserName}}>
+        <div className="app">
+            <Header />
+            <Outlet />
+        </div>
+      </UserContext.Provider>
+    </Provider>
+  )
+}
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Body />
+      },
+      {
+        path: "/about",
+        element: <Suspense fallback={<h1>Loading .... </h1>}><About /></Suspense>
+      },
+      {
+        path: "/contact",
+        element: <Contact />
+      },
+      {
+        path: "/restaurant/:resId",
+        element: <RestaurantMenu />
+      },
+      {
+        path: "/cart",
+        element: <Cart />
+      }
+    ],
+    errorElement: <Error />
+  },
+  
+]);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-console.log(parent);
-root.render(parent); 
+
+root.render(<RouterProvider router={appRouter} />);
